@@ -24,7 +24,7 @@ public class AuthController {
     public ResponseEntity login (@RequestBody LoginRequestDTO body){
         User user = this.repository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
         if(encoder.matches(body.password(), user.getPassword())){
-            String token = tokenService.generateToken(user);
+            String token = this.tokenService.generateToken(user);
             return ResponseEntity.ok(new responseDTO(user.getUsername(), token));
         }
         return ResponseEntity.badRequest().build();
@@ -45,7 +45,7 @@ public class AuthController {
         this.repository.save(newUser);
 
 
-            String token = tokenService.generateToken(newUser);
+            String token = this.tokenService.generateToken(newUser);
             return ResponseEntity.ok(new responseDTO(newUser.getUsername(), token));
 
 

@@ -33,11 +33,6 @@ public class TokenService {
             throw new RuntimeException("Token não pode ser gerado");
         }
     }
-    private Instant getExpiration() {
-        return LocalDateTime.now().
-                plusMinutes(15).
-                toInstant(ZoneOffset.of("-03:00"));
-    }
 
     public String verifyToken(String token) {
         try{
@@ -50,5 +45,11 @@ public class TokenService {
         }catch (JWTVerificationException exception){
             return null;
         }
+    }
+
+    private Instant getExpiration() {
+        return LocalDateTime.now().
+                plusMinutes(15).
+                toInstant(ZoneOffset.of("-03:00"));
     }
 }
